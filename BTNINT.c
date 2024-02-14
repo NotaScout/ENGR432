@@ -44,6 +44,15 @@ void Init_Switch(void){
 		NVIC_EnableIRQ(EXTI0_IRQn);
 }
 
+void Init_Timer(int number)
+{
+// what do we need to do here
+	//init tim6
+	//ENABLE interrupt signalling
+	
+
+}
+
 void EXTI0_IRQHandler(void){	
 	//Clear the EXTI pending bits
 	EXTI->PR|=(1<<SWITCH);
@@ -59,6 +68,7 @@ int main(void)
 	int j;
 	Init_LED();
 	Init_Switch();
+	Init_Timer();
 	while(1)
 		{
 			GPIOB->BSRR = ((1<<(LED_ORANGE+16))|(1<<(LED_GREEN+16))|(1<<(LED_RED+16))|(1<<(LED_BLUE+16)));
