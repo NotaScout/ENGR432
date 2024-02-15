@@ -3,119 +3,64 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: µVision V5.38.0.0
-Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Michael Fink University of St. Thomas Flex license: MDK Professional 5.38 (Flex) (mdk_pro) Operation stops: 5 Dec 2026
+IDE-Version: µVision V5.39.0.0
+Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: q d, st thomas, LIC=----
  
 Tool Versions:
-Toolchain:       MDK Professional 5.38 (Flex)  Version: 5.38.0.0
+Toolchain:       MDK-Lite  Version: 5.39.0.0
 Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
-C Compiler:      ArmClang.exe V6.19
-Assembler:       Armasm.exe V6.19
-Linker/Locator:  ArmLink.exe V6.19
-Library Manager: ArmAr.exe V6.19
-Hex Converter:   FromElf.exe V6.19
-CPU DLL:         SARMCM3.DLL V5.38.0.0
+C Compiler:      ArmClang.exe V6.21
+Assembler:       Armasm.exe V6.21
+Linker/Locator:  ArmLink.exe V6.21
+Library Manager: ArmAr.exe V6.21
+Hex Converter:   FromElf.exe V6.21
+CPU DLL:         SARMCM3.DLL V5.39.0.0
 Dialog DLL:      DCM.DLL V1.17.5.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.2.0.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
-C:\Users\scho3988\Documents\ENGR432\Lab.uvprojx
-Project File Date:  02/12/2024
+C:\Users\William\Desktop\ENGR432_lab1\Lab.uvprojx
+Project File Date:  02/14/2024
 
 <h2>Output:</h2>
-*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+*** Using Compiler 'V6.21', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-compiling system_stm32f4xx.c...
-assembling startup_stm32f429xx.s...
-BTNINT.c(1): warning: // comments are not allowed in this language [-Wcomment]
-//ENGR 331 - External Input demo (PA0 - USER SWITCH)
-^
-BTNINT.c(5): warning: no previous extern declaration for non-static variable 'count' [-Wmissing-variable-declarations]
-int count=5;
-    ^
-BTNINT.c(5): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int count=5;
-^
-BTNINT.c(16): warning: no previous prototype for function 'Init_LED' [-Wmissing-prototypes]
-void Init_LED(void){
-     ^
-BTNINT.c(16): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void Init_LED(void){
-^
-static 
-BTNINT.c(28): warning: invalid UTF-8 in comment [-Winvalid-utf8]
-//<95> Configure the mask bits of the 23 interrupt lines (EXTI_IMR)
-  ^
-BTNINT.c(29): warning: invalid UTF-8 in comment [-Winvalid-utf8]
-//<95> Configure the Trigger selection bits of the interrupt lines (EXTI_RTSR and EXTI_FTSR)
-  ^
-BTNINT.c(30): warning: invalid UTF-8 in comment [-Winvalid-utf8]
-//<95> Configure the enable and mask bits that control the NVIC IRQ channel mapped to the
-  ^
-BTNINT.c(35): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
-                SYSCFG->EXTICR[0] &= ~(0x000F);                 //EXTICR1_EXTI0_PA; //and because we want to clear all other
-                                  ~~ ^~~~~~~~~
-BTNINT.c(22): warning: no previous prototype for function 'Init_Switch' [-Wmissing-prototypes]
-void Init_Switch(void){
-     ^
-BTNINT.c(22): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void Init_Switch(void){
-^
-static 
-BTNINT.c(47): warning: no previous prototype for function 'EXTI0_IRQHandler' [-Wmissing-prototypes]
-void EXTI0_IRQHandler(void){    
-     ^
-BTNINT.c(47): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void EXTI0_IRQHandler(void){    
-^
-static 
-BTNINT.c(66): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
-                        for(j=0; j<500000;j++){};
-                                                ^
-BTNINT.c(68): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
-                        for(j=0; j<500000;j++){};
-                                                ^
-BTNINT.c(70): warning: no newline at end of file [-Wnewline-eof]
-}
- ^
-12 warnings generated.
-compiling BTNINT.c...
 linking...
-Program Size: Code=832 RO-data=444 RW-data=0 ZI-data=1632  
-".\Objects\Lab.axf" - 0 Error(s), 12 Warning(s).
+Program Size: Code=960 RO-data=444 RW-data=0 ZI-data=1632  
+".\Objects\Lab.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
                 http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
-                ARM.CMSIS.5.9.0
+                ARM::CMSIS@5.9.0
                 CMSIS (Common Microcontroller Software Interface Standard)
    * Component: CORE Version: 5.6.0
 
 Package Vendor: Keil
                 https://www.keil.com/pack/Keil.STM32F4xx_DFP.2.17.1.pack
-                Keil.STM32F4xx_DFP.2.17.1
+                Keil::STM32F4xx_DFP@2.17.1
                 STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
    * Component: Startup Version: 2.6.3
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/_Target_1
-  C:/Keil_v5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
-  C:/Keil_v5/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+  C:/Users/William/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/William/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:5.6.0
+   * Component: ARM::CMSIS:CORE@5.6.0
 
-   * Component: Keil::Device:Startup:2.6.3
-      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+   * Component: Keil::Device:Startup@2.6.3
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f429xx.s
       Source file:   MDK/Device/Source/ARM/STM32F42xxx_43xxx_OPT.s
-      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
-Build Time Elapsed:  00:00:01
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>
