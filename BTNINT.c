@@ -1,23 +1,35 @@
-//ENGR 331 - External Input demo (PA0 - USER SWITCH)
+//ENGR 331 - External Input demo (PA0 - USER button)
 
 #include "stm32f4xx.h"                  // Device header
+#include <stdio.h>
+#include <string.h>
 
-int count=5;
-int Countup = 1;
+
 #define LED_ORANGE 13  //PortDPin13
 #define LED_GREEN 0
 #define LED_RED 14
 #define LED_BLUE 7
-#define SWITCH 13 // PC 13
+#define button 13 // PC 13
 
+
+int count=5;
+int Countup = 1;
+
+int Downcount_Delay = 0;
+
+int Bit0 = 0; // bit 1 2 & 3 for out binary counter 
+int Bit1 = 0; // you could say it's a BIT of a hacky solution
+int Bit2 = 0; // yea ...
 
 
 
 
 // no idea if we have a usable 4th LED, but the 3 that are usable appear to be R,G,&B ones...
 
-
+// begin prototyping
 void LED_Toggle(int LED);
+void LED_On(int LED);
+void LED_Off(int LED);
 void Init_LED(void);
 void Init_Switch(void);
 void Init_Timer6(uint32_t  PSC_num, uint32_t  ARR_num);
@@ -49,11 +61,12 @@ __enable_irq();
 
 void  EXTI15_10_IRQHandler(void){
 	//Clear the EXTI pending bits
-	EXTI->PR|=(1<<SWITCH);
+	EXTI->PR|=(1<<button);
 	
-GPIOB->ODR ^= (1u<<LED_GREEN);
-
-NVIC_ClearPendingIRQ(EXTI15_10_IRQn);
+//GPIOB->ODR ^= (1u<<LED_GREEN); for testing purposes
+Downcount_Delay = 0; // makes the counter take twice as long on downcount // just resets it to make it consistient
+Countup ^= 1u; // count down now when toggled
+NVIC_ClearPendingIRQ(EXTI15_10_IRQn); // clear pending
 	
 	
 	EXTI->PR |= (1<<0);// dont delete, or it gets stuck here
@@ -90,16 +103,62 @@ void TIM6_DAC_IRQHandler(void)
 	if((count == 7) && (Countup == 1)){
 	count = 0;
 	}
-	else if((count == 0)&&(Countup == 0)){
+	else if((count == 0)&&(Countup == 0)&&(Downcount_Delay == 1)){
 	count = 7;
+	Downcount_Delay = 0;
 	}
-	else if((Countup == 0)){
+	else if((Countup == 0)&&(Downcount_Delay == 1)){
 	count--;
+	Downcount_Delay = 0;
 	}
-	else{
+	else if((Countup == 1)){
 	count++;
 	}
-	LEDSET(count);
+	else{
+		Downcount_Delay = 1;
+	}
+	
+	Bit0 = count;
+	Bit1 = count;
+	Bit2 = count;
+	
+	// ez little bit mapping int >> binary, another note for future me, possible use another way ? research more efficient way
+	
+	Bit0 &= 1u; // NO actually and like: 001 &=> 111 = 001 etc, bit capture//////// XOR for st8 machine
+	Bit1 &= 2u; 
+	Bit2 &= 4u; 
+	
+	
+	
+	if(Bit0){
+	LED_On(LED_GREEN);
+	}
+	else
+	{
+	LED_Off(LED_GREEN);
+	}
+	
+	if(Bit1 == 2u){
+	LED_On(LED_BLUE);
+	}
+	else
+	{
+	LED_Off(LED_BLUE);
+	}
+	
+	if(Bit2 == 4u){
+	LED_On(LED_RED);
+	}
+	else
+	{
+	LED_Off(LED_RED);
+	}
+	// R B G
+	// M   L
+	// 0 0 0
+	// 0 0 1
+	// 0 1 0
+	// e t c
 	
 	/*
 	LED_Toggle(LED_BLUE);
@@ -108,18 +167,23 @@ void TIM6_DAC_IRQHandler(void)
 */
 }
 
+// LED basic control abstraction
 void LED_Toggle(int LED)
 {
 GPIOB->ODR ^= (1u<<LED);
 
 }
 
-
-void LEDSET(int countvalue)//
+void LED_On(int LED)
 {
-
-
+GPIOB->ODR |= (1u<<LED);
 }
+
+void LED_Off(int LED)
+{
+GPIOB->ODR &= ~(1u<<LED);
+}
+
 
 
 
@@ -145,7 +209,58 @@ int main(void)
 			for(j=0; j<500000;j++){}
 		}
 	*/
-	while(1);
+	
+	while(1)
+	{/* // im simply dumber
+		switch(Bit0){
+			case 0:
+			{
+				LED_Toggle(LED_BLUE);
+				Bit1 ^= 1u;
+			}
+			break;
+			case 1:
+			{
+				Bit1 = Bit1;
+			}
+			break;
+			default:
+				Bit1 = 0;
+		}
+	// lnbreak1
+		switch(Bit1){
+			case 0:
+			{
+				Bit2 ^= 1u;
+			}
+			break;
+			case 1:
+			{
+				Bit2 = Bit2;
+			}
+			break;
+			default:
+				Bit2 = 0;
+		}
+		//lnbreak2
+		switch(Bit2){
+			case 0:
+			{
+				
+			}
+			break;
+			case 1:
+			{
+				
+			}
+			break;
+			default:
+				Bit1 = 0;
+		}
+		
+		
+		*/
+	}
 }
 
 
