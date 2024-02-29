@@ -1,0 +1,17 @@
+// stuff to use
+
+RW:
+PF
+13 
+3
+15 
+
+13(RW)	3(RS)	
+	15(E)
+
+
+DATA:
+PG
+7	5
+
+4	6
