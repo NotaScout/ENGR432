@@ -22,7 +22,15 @@ int Bit0 = 0; // bit 1 2 & 3 for out binary counter
 int Bit1 = 0; // you could say it's a BIT of a hacky solution
 int Bit2 = 0; // yea ...
 
-
+	unsigned char test1 = 13;
+	
+	int one1 = 0;
+	int one2 = 0;
+	
+	int b0 = 0;
+	int b1 = 0;
+	int b2 = 0;
+	int b3 = 0;
 
 
 // no idea if we have a usable 4th LED, but the 3 that are usable appear to be R,G,&B ones...
@@ -192,11 +200,27 @@ GPIOB->ODR &= ~(1u<<LED);
 
 int main(void)
 {
+	// safe delete
+one1 = test1;
+one2 = (test1 & 8u)>>3;
+	// safe delete
+	
+	// sample bit deconstructor
+	b0 = (test1 & 1u)>>0;
+	b1 = (test1 & 2u)>>1;
+	b2 = (test1 & 4u)>>2;
+	b3 = (test1 & 8u)>>3;
+	
+	
+	
 	int j;
 	Init_LED();
 	Init_Switch();
 	Init_Timer6(21000, 999); // TIM 6 has 16-bit resolution
 	LCD_port_init();
+	LCD_init();
+	LCD_clear();
+	LCD_send_String("STOPPED");
 	
 	/*
 	while(1)
