@@ -1,4 +1,5 @@
 //ENGR 331 - External Input demo (PA0 - USER button)
+//William Schoon
 
 #include "stm32f4xx.h"                  // Device header
 #include <stdio.h>
@@ -194,7 +195,7 @@ int main(void)
 	int j;
 	Init_LED();
 	Init_Switch();
-	Init_Timer6(9999, 999); // TIM 6 has 16-bit resolution
+	Init_Timer6(21000, 999); // TIM 6 has 16-bit resolution
 	
 	
 	/*
