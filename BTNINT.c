@@ -1,6 +1,28 @@
-//ENGR 331 - External Input demo (PA0 - USER button)
+//ENGR 432 - LCD Library demo
 //William Schoon
+// Instructions for using this Lib:
+/*
+Step 0:
+hook up LCD. This header is intended for the Hitachi HD44780 16x2 char display.
 
+Pinmap:
+    RS: GPIOE6
+    RW: GPIOE7
+    EN: GPIOE3
+    DB4: GPIOF8
+    DB5: GPIOF7
+    DB6: GPIOF9
+    DB7: GPIOG1
+
+Step 1:
+Include LCD .c & .h files within project
+Step 2;
+initialise LCD with LCD_setup command
+Step 3:
+refer to header for data commands. Most useful commands are send string & send number commands.
+
+An example of how to some Data commands is on ln 246.
+*/
 #include "stm32f4xx.h"                  // Device header
 #include <stdio.h>
 #include <string.h>
@@ -213,78 +235,30 @@ one2 = (test1 & 8u)>>3;
 	
 	
 	
-	int j;
+	int i;
 	Init_LED();
 	Init_Switch();
 	Init_Timer6(21000, 999); // TIM 6 has 16-bit resolution
-	LCD_port_init();
-	LCD_init();
+	
+	 // example of how to use lib
+	LCD_setup();
 	LCD_clear();
-	LCD_send_String("STOPPED");
+	LCD_send_String("Initialised");
+	for (i = 0; i <= 2000000; i++) {} // smol delayt
+	LCD_clear();
+	LCD_place_cursor(0xC0); // Row2,Col1
+	for (i = 0; i <= 2000000; i++) {}
+	LCD_place_cursor(0x85); // Row1,Col5
+	for (i = 0; i <= 2000000; i++) {}
+	LCD_send_intString(2+4);
+	LCD_place_cursor(0xC2);
+	LCD_send_floatString(0.444+2);
+	LCD_place_cursor(0x80);
 	
-	/*
-	while(1)
-		{
-			GPIOB->BSRR = ((1<<(LED_ORANGE+16))|(1<<(LED_GREEN+16))|(1<<(LED_RED+16))|(1<<(LED_BLUE+16)));
-			GPIOB->BSRR = ((1<<(LED_ORANGE))|(1<<(LED_GREEN))|(1<<(LED_RED)) |(1<<(LED_BLUE)));
-			for(j=0; j<500000;j++){
-			int m = 0;
-			}
-			GPIOB->BSRR = ((1<<(LED_ORANGE+16))|(1<<(LED_GREEN+16))|(1<<(LED_RED+16))|(1<<(LED_BLUE+16)));
-			for(j=0; j<500000;j++){}
-		}
-	*/
+	 //
 	
 	while(1)
-	{/* // im simply dumber
-		switch(Bit0){
-			case 0:
-			{
-				LED_Toggle(LED_BLUE);
-				Bit1 ^= 1u;
-			}
-			break;
-			case 1:
-			{
-				Bit1 = Bit1;
-			}
-			break;
-			default:
-				Bit1 = 0;
-		}
-	// lnbreak1
-		switch(Bit1){
-			case 0:
-			{
-				Bit2 ^= 1u;
-			}
-			break;
-			case 1:
-			{
-				Bit2 = Bit2;
-			}
-			break;
-			default:
-				Bit2 = 0;
-		}
-		//lnbreak2
-		switch(Bit2){
-			case 0:
-			{
-				
-			}
-			break;
-			case 1:
-			{
-				
-			}
-			break;
-			default:
-				Bit1 = 0;
-		}
-		
-		
-		*/
+	{
 	}
 }
 
