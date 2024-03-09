@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp.sp
+"hallab3ws\startup_stm32f429xx.o"
+"hallab3ws\main.o"
+"hallab3ws\stm32f4xx_it.o"
+"hallab3ws\stm32f4xx_hal_msp.o"
+"hallab3ws\lcd.o"
+"hallab3ws\stm32f4xx_hal_tim.o"
+"hallab3ws\stm32f4xx_hal_tim_ex.o"
+"hallab3ws\stm32f4xx_hal_uart.o"
+"hallab3ws\stm32f4xx_hal_rcc.o"
+"hallab3ws\stm32f4xx_hal_rcc_ex.o"
+"hallab3ws\stm32f4xx_hal_flash.o"
+"hallab3ws\stm32f4xx_hal_flash_ex.o"
+"hallab3ws\stm32f4xx_hal_flash_ramfunc.o"
+"hallab3ws\stm32f4xx_hal_gpio.o"
+"hallab3ws\stm32f4xx_hal_dma_ex.o"
+"hallab3ws\stm32f4xx_hal_dma.o"
+"hallab3ws\stm32f4xx_hal_pwr.o"
+"hallab3ws\stm32f4xx_hal_pwr_ex.o"
+"hallab3ws\stm32f4xx_hal_cortex.o"
+"hallab3ws\stm32f4xx_hal.o"
+"hallab3ws\stm32f4xx_hal_exti.o"
+"hallab3ws\system_stm32f4xx.o"
+--strict --scatter "HALLAB3WS\HALLAB3WS.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "HALLAB3WS.map" -o HALLAB3WS\HALLAB3WS.axf
