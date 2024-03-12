@@ -36,13 +36,19 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+volatile uint32_t output_val;
+volatile float buffer;
+// buffer
+uint8_t dataTX[] = {0,0};
+	int r;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
 TIM_HandleTypeDef htim2;
+
+UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -53,6 +59,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -92,27 +99,34 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_TIM2_Init();
-	
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	//uint32_t timeout = 1000;
-	volatile uint32_t output_val;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-		
+		//dataTX[0] = 0x6;
+		//dataTX[1] = 0xF;
 		// start ADC peripheral
 		HAL_ADC_Start(&hadc1);
 		// wait for end of conversion
 		HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-		// read ADC converted values
-		output_val = (((HAL_ADC_GetValue(&hadc1))*(3000/1024.0)-500)/10.0)*(9/5.0)+32; // convert DC reading to F
-		
+		// read ADC converted value
+		r = (HAL_ADC_GetValue(&hadc1));
+		//output_val = (((HAL_ADC_GetValue(&hadc1))*(3000/1024.0)-500)/10.0)*(9/5.0)+32; // convert DC reading to F
+		output_val = (((1.0*HAL_ADC_GetValue(&hadc1))*(36.0 * 10)/890.0))+(10*32.0);
+		dataTX[1] = (output_val & 0xF00u) >> 8; // top bit 	12
+		dataTX[0] = (output_val & 0x0FFu) ; // untop bit 8
+		// normalized manually to 68F
 		HAL_Delay(1);
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
+		HAL_UART_Transmit( &huart2, dataTX, 2, 1000);
   }
   /* USER CODE END 3 */
 }
@@ -180,7 +194,7 @@ static void MX_ADC1_Init(void)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
-  hadc1.Init.Resolution = ADC_RESOLUTION_10B; // CHANGED THIS
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
@@ -190,7 +204,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.NbrOfConversion = 1;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-  if (HAL_ADC_Init(&hadc1) != HAL_OK) // ADC prescalar, conversion resolution, data alignment
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -200,7 +214,7 @@ static void MX_ADC1_Init(void)
   sConfig.Channel = ADC_CHANNEL_5;
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) // configure channels for channel #, rank, etc
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -256,6 +270,39 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -269,6 +316,7 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);

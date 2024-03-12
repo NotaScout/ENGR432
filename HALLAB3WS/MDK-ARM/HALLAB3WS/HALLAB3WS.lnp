@@ -1,9 +1,9 @@
 --cpu=Cortex-M4.fp.sp
 "hallab3ws\startup_stm32f429xx.o"
+"hallab3ws\lcd.o"
 "hallab3ws\main.o"
 "hallab3ws\stm32f4xx_it.o"
 "hallab3ws\stm32f4xx_hal_msp.o"
-"hallab3ws\lcd.o"
 "hallab3ws\stm32f4xx_hal_tim.o"
 "hallab3ws\stm32f4xx_hal_tim_ex.o"
 "hallab3ws\stm32f4xx_hal_uart.o"
