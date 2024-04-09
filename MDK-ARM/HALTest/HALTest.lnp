@@ -1,0 +1,25 @@
+--cpu=Cortex-M4.fp.sp
+"haltest\startup_stm32f429xx.o"
+"haltest\main.o"
+"haltest\stm32f4xx_it.o"
+"haltest\stm32f4xx_hal_msp.o"
+"haltest\stm32f4xx_hal_tim.o"
+"haltest\stm32f4xx_hal_tim_ex.o"
+"haltest\stm32f4xx_hal_rcc.o"
+"haltest\stm32f4xx_hal_rcc_ex.o"
+"haltest\stm32f4xx_hal_flash.o"
+"haltest\stm32f4xx_hal_flash_ex.o"
+"haltest\stm32f4xx_hal_flash_ramfunc.o"
+"haltest\stm32f4xx_hal_gpio.o"
+"haltest\stm32f4xx_hal_dma_ex.o"
+"haltest\stm32f4xx_hal_dma.o"
+"haltest\stm32f4xx_hal_pwr.o"
+"haltest\stm32f4xx_hal_pwr_ex.o"
+"haltest\stm32f4xx_hal_cortex.o"
+"haltest\stm32f4xx_hal.o"
+"haltest\stm32f4xx_hal_exti.o"
+"haltest\system_stm32f4xx.o"
+--strict --scatter "HALTest\HALTest.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "HALTest.map" -o HALTest\HALTest.axf
