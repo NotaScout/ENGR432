@@ -1,0 +1,20 @@
+The 'Blinky' project is a simple demo program for
+ST 'STM32F429ZI' microcontroller using ST 'NUCLEO-F429ZI' Evaluation Board.
+It is compliant to Cortex Microcontroller Software Interface Standard (CMSIS).
+
+Example functionality:
+ - Clock Settings:
+   - XTAL    = MCO =   8.00 MHz
+   - SYSCLK  =       168.00 MHz
+
+ - 3 LEDs blink
+ - blinking is paused while holding down the USER button.
+
+The Blinky program is available in different targets:
+ - Debug:
+   - ARM Compiler 6 optimization Level 1
+   - Enabled Event Recorder
+   - Keil RTX5 variant 'Source'
+ - Release:
+   - ARM Compiler 6 optimization Level 3
+   - Keil RTX5 variant 'Library'
