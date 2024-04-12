@@ -12,11 +12,15 @@ int generateRandomInt() {
 // Function to print a matrix (prints only first few elements of each row)
 void printMatrix(int** matrix) {
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < 10; j++) { // Print only the first 10 elements of each row
-            printf("%d ", matrix[i][j]);
+        for (int j = 0; j < 1000; j++) { // Print only the first 10 elements of each row
+            printf("%d\t", matrix[i][j]);
         }
-        printf("..."); // Indicate that the row continues
+        //printf("..."); // Indicate that the row continues
+		// FULL FAT
+		printf("Row %d\n",i+1);
         printf("\n");
+		printf("\n");
+		printf("\n");
     }
     fflush(stdout); // Flush the output buffer
 }
