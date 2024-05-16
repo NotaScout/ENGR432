@@ -2,8 +2,8 @@
 #include <WiFiUdp.h>
  
 // Set WiFi credentials
-#define WIFI_SSID "TheOtherESP"
-#define WIFI_PASS "flashmeifyoucan"
+#define WIFI_SSID "WSESP8266AP"
+#define WIFI_PASS "password"
 
 // UDP
 WiFiUDP UDP;
@@ -45,6 +45,35 @@ void setup() {
  
 }
  
+
+void connect(){
+
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  WiFi.mode(WIFI_STA);
+ 
+  // Connecting to WiFi...
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
+  // Loop continuously while WiFi is not connected
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(100);
+    Serial.print(".");
+  }
+ 
+  // Connected to WiFi
+  Serial.println();
+  Serial.print("Connected! IP address: ");
+  Serial.println(WiFi.localIP());
+
+  // Begin UDP port
+  UDP.begin(UDP_PORT);
+  Serial.print("Opening UDP port ");
+  Serial.println(UDP_PORT);
+ 
+
+}
+
 void loop() {
 
   // Read button
@@ -55,5 +84,10 @@ void loop() {
   UDP.write(buttonState);
   UDP.endPacket();
   delay(100);
-  
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    delay(1);
+    Serial.print("AP Disconnected!\n");
+    connect();
+  }
 }

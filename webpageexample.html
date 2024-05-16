@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .number {
+            font-size: 5em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title" id="title">Tempurature</div>
+        <div class="number" id="numberDisplay">0</div>
+    </div>
+
+    <script>
+        // Function to update the number display
+        function updateNumber() {
+            // You can replace this with any function that generates the number
+            const newNumber = Math.floor(Math.random() * 100);
+
+            // Update the number displayed
+            document.getElementById("numberDisplay").innerText = newNumber;
+        }
+
+        // Call updateNumber function initially
+        updateNumber();
+
+        // Update the number every second
+        setInterval(updateNumber, 1000);
+    </script>
+</body>
+</html>
