@@ -105,11 +105,20 @@ void loop() {
 
   // Read button
   char buttonState = digitalRead(2);
-  char DataIn = mySerial.read();
+  int DataIn = mySerial.read();
   // Send Packet
   UDP.beginPacket(remote_IP, UDP_PORT);
-  UDP.write(buttonState);
+  UDP.write(byte1); // << 2 wide packet
+  UDP.write(byte2);
   UDP.endPacket();
+  /*
+  UDP.beginPacket(remote_IP, UDP_PORT);
+  UDP.write(byte1);
+  UDP.endPacket();
+  UDP.beginPacket(remote_IP, UDP_PORT);
+  UDP.write(byte2);
+  UDP.endPacket();
+  */
   delay(100);
   if (WiFi.status() != WL_CONNECTED)
   {
