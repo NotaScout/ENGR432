@@ -1,5 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(D5, D4); // RX, TX
 
 // Set AP credentials
 #define AP_SSID "WSESP8266AP"
@@ -20,6 +23,7 @@ void setup() {
   
   // Setup serial port
   Serial.begin(115200);
+  mySerial.begin(115200);
   Serial.println();
 
   // Begin Access Point
@@ -64,11 +68,11 @@ void loop() {
     if (len >= 2) {
       uint16_t combinedValue = (static_cast<uint16_t>(packetBuffer[1]) << 8) | static_cast<uint8_t>(packetBuffer[0]);
       Serial.print("Concatenated value: ");
-      Serial.println(combinedValue, DEC);
+      Serial.println(combinedValue);
       
-      Serial.println(combinedValue/10, DEC);
-      Serial.print(" Degrees ");
-    
+      // Send Serial Data OUT
+      mySerial.print(packetBuffer[1]);
+      mySerial.print(packetBuffer[0]);
     }
 
     // Check the first byte of the packet to control the LED
@@ -78,5 +82,15 @@ void loop() {
       digitalWrite(2, LOW);
     }
   }
+  
+  // Read from SoftwareSerial and print to Serial monitor
+  if (mySerial.available()) {
+    while (mySerial.available()) {
+      char c = mySerial.read();
+      Serial.write(c);
+    }
+    Serial.println();
+  }
+
   delay(20);
 }
